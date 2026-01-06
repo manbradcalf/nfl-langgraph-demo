@@ -2,14 +2,14 @@
 
 from duckduckgo_search import DDGS
 
-from nfl_agent.state import AgentState
+from typing import TypedDict
 
 
-def fetch_nfl_news(state: AgentState) -> dict:
+def fetch_nfl_news(state: dict) -> dict:
     """
-    Fetches NFL news articles from DuckDuckGo.
+    Fetches news articles from DuckDuckGo.
     """
-    query = state.get("query", "NFL news today")
+    query = state.get("query") 
 
     print(f"[News Fetcher] Searching for: {query}")
 

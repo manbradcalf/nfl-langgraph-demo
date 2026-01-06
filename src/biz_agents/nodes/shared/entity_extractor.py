@@ -2,20 +2,8 @@
 
 from gliner2 import GLiNER2
 
-from nfl_agent.state import AgentState
+from typing import TypedDict
 
-
-# Entity labels for NFL context
-ENTITY_LABELS = [
-    "player",
-    "team",
-    "date",
-    "location",
-    "stadium",
-    "score",
-    "coach",
-    "position"
-]
 
 # Load model once at module level
 print("Loading GLiNER2 model...")
@@ -23,7 +11,7 @@ gliner_model = GLiNER2.from_pretrained("fastino/gliner2-base-v1")
 print("GLiNER2 model loaded!\n")
 
 
-def extract_entities(state: AgentState) -> dict:
+def extract_entities(state: dict) -> dict:
     """
     Extracts entities from news articles using GLiNER.
     """
@@ -38,7 +26,7 @@ def extract_entities(state: AgentState) -> dict:
         text = f"{article['title']}. {article['body']}"
 
         # Run GLiNER2 prediction using extract_entities
-        result = gliner_model.extract_entities(text, ENTITY_LABELS)
+        result = gliner_model.extract_entities(text)
 
         article_entities = {
             "article_index": i,
@@ -46,7 +34,6 @@ def extract_entities(state: AgentState) -> dict:
             "entities": []
         }
 
-        # GLiNER2 returns {"entities": {"player": [...], "team": [...], ...}}
         entities_dict = result.get("entities", result) if isinstance(result, dict) else {}
 
         if isinstance(entities_dict, dict):

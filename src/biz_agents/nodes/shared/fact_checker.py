@@ -6,7 +6,7 @@ from pathlib import Path
 
 import requests
 
-from nfl_agent.state import AgentState
+from typing import TypedDict
 
 
 class NFLFactChecker:
@@ -145,7 +145,7 @@ print("Initializing NFL Fact Checker...")
 nfl_fact_checker = NFLFactChecker()
 
 
-def validate_entities(state: AgentState) -> dict:
+def validate_entities(state: dict) -> dict:
     """
     LangGraph node that runs NFLFactChecker validation tasks.
     """

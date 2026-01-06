@@ -2,13 +2,13 @@
 
 from langchain_ollama import ChatOllama
 
-from nfl_agent.state import AgentState
+from typing import TypedDict
 
 
 llm = ChatOllama(model="qwen3:8b", temperature=0)
 
 
-def summarize_findings(state: AgentState) -> dict:
+def summarize_findings(state: dict) -> dict:
     """
     Uses the LLM to create a summary of the validated entities.
     """
@@ -30,7 +30,7 @@ def summarize_findings(state: AgentState) -> dict:
     if not entity_summary:
         return {"messages": ["No entities found to summarize"]}
 
-    prompt = f"""Based on the following NFL news entities extracted, provide a brief 2-3 sentence summary of the key information:
+    prompt = f"""Based on the following news articles extracted, provide a brief 2-3 sentence summary of the key information:
 
 {chr(10).join(entity_summary)}
 
